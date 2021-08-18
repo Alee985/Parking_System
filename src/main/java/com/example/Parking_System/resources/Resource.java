@@ -15,7 +15,17 @@ public class Resource {
     @Path("/request")
     public Response getJSON(String payload) throws Exception{
         ParkInfo info=new Gson().fromJson(payload,ParkInfo.class);
+        if(validateInput(info)){
+            return Response.ok("Parked In Successfully").build();
+        }
         System.out.println(info.toString());
-        return Response.noContent().build();
+        return Response.status(500,"INVALID INFOMATION SUBMITTED").build();
+    }
+    public Boolean validateInput(ParkInfo info){
+        if(info.getEmail().equals("") || info.getV_Name().equals("") ){
+            return false;
+        }
+        else
+            return true;
     }
 }
