@@ -15,8 +15,10 @@ public class Resource {
     @Path("/request")
     public Response getJSON(String payload) throws Exception{
         ParkInfo info=new Gson().fromJson(payload,ParkInfo.class);
-        if(validateInput(info)){
-            return Response.ok("Parked In Successfully").build();
+        if(validateInput(info))
+        {
+            String msg= SQS.SendMessage(info.toString());
+            return Response.ok(msg).build();
         }
         System.out.println(info.toString());
         return Response.status(500,"INVALID INFOMATION SUBMITTED").build();
