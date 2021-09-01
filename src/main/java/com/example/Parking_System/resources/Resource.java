@@ -17,8 +17,16 @@ public class Resource {
     public Response getJSON(String payload) throws Exception{
 
         ParkInfo info=new Gson().fromJson(payload,ParkInfo.class);
+        try{
+            if(info.getV_Name().equals("")){
+                throw new nameException();
+            }
 
-        if(!(info.getV_Name().equals("")))
+
+        }catch (Exception ex){
+
+        }
+        /*     if(!(info.getV_Name().equals("")))
 
         {
             Date d=new Date();
@@ -38,7 +46,7 @@ public class Resource {
 
         else
             return Response.status(500,"INVALID INFOMATION SUBMITTED").build();
-    }
+   */ }
 
 
 
