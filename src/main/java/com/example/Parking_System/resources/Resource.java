@@ -21,11 +21,20 @@ public class Resource {
             if(info.getV_Name().equals("")){
                 throw new nameException();
             }
+            else if(info.getEmail().equals("")){
+                throw new emailException();
+            }
 
 
-        }catch (Exception ex){
 
+        }catch (nameException ex){
+            return Response.status(400,ex.toString()).build();
+
+        }catch (emailException ex){
+            return Response.status(400,ex.toString()).build();
         }
+
+
         /*     if(!(info.getV_Name().equals("")))
 
         {
