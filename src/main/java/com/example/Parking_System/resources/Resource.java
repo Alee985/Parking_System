@@ -6,6 +6,7 @@ import org.apache.commons.lang3.BooleanUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 
 @Path("/parking")
 
@@ -14,20 +15,33 @@ public class Resource {
     @POST
     @Path("/request")
     public Response getJSON(String payload) throws Exception{
+
         ParkInfo info=new Gson().fromJson(payload,ParkInfo.class);
-        if(validateInput(info))
+
+        if(!(info.getV_Name().equals("")))
+
         {
-            String msg= SQS.SendMessage(info.toString());
-            return Response.ok(msg).build();
+            Date d=new Date();
+            if(info.getStatus().equals("in") && !(info.getEmail().equals("")))
+            {
+                info.setParkin(d.toString());
+                String msg = SQS.SendMessage(info.toString());
+                return Response.ok("You have been Parked In.").build();
+            }
+            else
+            {
+                info.setParkout(d.toString());
+                String msg = SQS.SendMessage(info.toString());
+                return Response.ok("You have been Parked Out.").build();
+            }
         }
-        System.out.println(info.toString());
-        return Response.status(500,"INVALID INFOMATION SUBMITTED").build();
-    }
-    public Boolean validateInput(ParkInfo info){
-        if(info.getEmail().equals("") || info.getV_Name().equals("") ){
-            return false;
-        }
+
         else
-            return true;
+            return Response.status(500,"INVALID INFOMATION SUBMITTED").build();
     }
+
+
+
 }
+
+

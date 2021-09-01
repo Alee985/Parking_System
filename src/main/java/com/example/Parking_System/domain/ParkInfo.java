@@ -2,14 +2,36 @@ package com.example.Parking_System.domain;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 
 public class ParkInfo {
     @SerializedName("name")
     private String V_Name;
-    @SerializedName("Email")
+
+    @SerializedName("email")
     private String email;
-    Date parkin;
+
+    @SerializedName("status")
+    private String status;
+
+    private String parkin;
+
+    private String parkout;
+
+    public String getParkout() {
+        return parkout;
+    }
+
+    public void setParkout(String parkout) {
+        this.parkout = parkout;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getV_Name() {
         return V_Name;
@@ -27,16 +49,16 @@ public class ParkInfo {
         this.email = email;
     }
 
-    public Date getParkin() {
+    public String getParkin() {
         return parkin;
     }
 
-    public void setParkin(Date parkin) {
+    public void setParkin(String parkin) {
         this.parkin = parkin;
     }
 
     @Override
     public String toString(){
-        return "Vehicle Name is : " + V_Name +"\nUser Email is " + email;
+        return  status + "/" + V_Name + "/" + email + "/" + parkin +"/" +parkout ;
     }
 }
